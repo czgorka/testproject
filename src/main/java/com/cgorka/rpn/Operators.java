@@ -1,4 +1,4 @@
-package com.test.baselab;
+package com.cgorka.rpn;
 
 import static java.util.Comparator.naturalOrder;
 
