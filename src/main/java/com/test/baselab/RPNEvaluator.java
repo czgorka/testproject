@@ -52,7 +52,7 @@ public class RPNEvaluator {
 					args.add(0, stack.pop());
 				};
 				
-				stack.push(operator.evaluate(args));
+				stack.push(operator.calculate(args));
 			} else {
 				stack.push(Long.parseLong(elem));
 			}

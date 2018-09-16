@@ -8,12 +8,12 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public enum Operators {
-	PLUS("+", 2) { Long calculate(List<Long> args) { return args.get(0) + args.get(1); } },
-	MINUS("-", 2) { Long calculate(List<Long> args) { return args.get(0) - args.get(1); } },
-	MULTIPLY("*", 2) { Long calculate(List<Long> args) { return args.get(0) * args.get(1); } },
-	DIVIDE("/", 2) { Long calculate(List<Long> args) { return args.get(0) / args.get(1); } },
-	TERNARY("if", 3) { Long calculate(List<Long> args) { return args.get(0) != 0 ? args.get(1) : args.get(2); } },
-	MAX("max", -1) { Long calculate(List<Long> args) { return args.stream().max(naturalOrder()).get(); } };
+	PLUS("+", 2) { Long apply(List<Long> args) { return args.get(0) + args.get(1); } },
+	MINUS("-", 2) { Long apply(List<Long> args) { return args.get(0) - args.get(1); } },
+	MULTIPLY("*", 2) { Long apply(List<Long> args) { return args.get(0) * args.get(1); } },
+	DIVIDE("/", 2) { Long apply(List<Long> args) { return args.get(0) / args.get(1); } },
+	TERNARY("if", 3) { Long apply(List<Long> args) { return args.get(0) != 0 ? args.get(1) : args.get(2); } },
+	MAX("max", -1) { Long apply(List<Long> args) { return args.stream().max(naturalOrder()).get(); } };
 	
 	private final String symbol;
 	private final int argsSize;
@@ -23,15 +23,15 @@ public enum Operators {
 		this.argsSize = numOfArgs;
 	}
 	
-	abstract Long calculate(List<Long> args);
+	abstract Long apply(List<Long> args);
 	
-	public Long evaluate(List<Long> args) {
+	public Long calculate(List<Long> args) {
 		Objects.requireNonNull(args);
 		if ((argsSize == -1 && args.isEmpty()) || argsSize > args.size()) {
-			throw new IllegalStateException();
+			throw new IllegalArgumentException();
 		}
 		
-		return calculate(args);
+		return apply(args);
 	}
 	
 	public int getArgsSize() {
